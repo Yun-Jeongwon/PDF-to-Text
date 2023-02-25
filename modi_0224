@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>guide_2</title>
+    <script defer src = "https://pyscript.net/alpha/pyscript.js"> </script>
+</head>
+
+<body>
+    <style>
+        body{
+            margin:0px;
+        }
+        h1{
+            text-align: center;
+            padding: 60px;
+            margin: 0px;
+            border-bottom: 4px solid;
+            font-weight: bold;
+            color: black;
+        }
+        #main{
+            width : 6% ;
+            position: absolute ;
+            top: 35px;
+            left: 520px;
+        }
+        #category{
+            margin:0px;
+            border-right:black 1px solid;
+            font-family: 'Nanum Myeongjo';
+        }
+        #category li, h3{
+            margin: 0px;
+            padding: 15px;
+            color:black;
+        }
+        #category a{
+            text-decoration:none;
+        }
+        #grid{
+            display: grid;
+            grid-template-columns: 160px 1fr;
+        }
+        #pdfShow {
+            text-align: center;
+            height: 650px;
+            width : 1000px;
+            padding : 40px;
+            font-family: "Sans-Serif";
+}
+    </style>
+    <h1>Convert PDF to Text : 원애연 졸업작품</h1>
+    <div id="grid">
+        <div id="category">
+            <h3 style="border-bottom:black 1px solid;">category 목록</h3>
+            <a href="이동할페이지1.html" target="board">
+                <li class="list" onclick="Clicked(this);">기능1</li></a>
+            <a href="이동할페이지2.html" target="board">
+                <li class="list" onclick="Clicked(this);">기능2</li></a>
+            <a href="이동할페이지3.html" target="board">
+                <li class="list" onclick="Clicked(this);">기능3</li></a>
+    </div>
+    <div id="pdfShow">
+            <!--<div>Shift/Ctrl 키로 다중 파일 선택<div> 
+            <div><input type="file" multiple/></div>
+            <br>
+            <div>단일 파일 선택</div>
+            <div><input type="file"/></div> -->
+        <form>
+            <div>
+            <input type="file" id="file_upload" accept=".pdf, image/*" multiple>
+            <!-- multiple 지울지? -->
+            <!-- <input type="submit"> -->
+            <p id="status"></p>
+            <img id="output">
+            <embed id = "pdfoutput" type = "application/pdf" width = "1000" height = "1600">
+
+            <!-- script 부분 -> python으로..? -->
+            
+            <script>
+                const status = document.getElementById('status');
+                const output = document.getElementById('output');
+                if (window.FileList && window.File && window.FileReader) {
+                    document.getElementById('file_upload').addEventListener('change', event => {
+                        output.src = '';
+                        status.textContent = '';
+                        const file = event.target.files[0];
+                        if (!file.type) {status.textContent = 'Error: The File.type property does not appear to be supported on this browser.';
+                        return;
+                    }
+                    if (!file.type.match('image.*') && !file.type.match('.pdf')) {
+                        status.textContent = 'Error: The selected file does not appear to be an image or pdf.'
+                        return;
+                    }
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.addEventListener('load', event => {
+                        output.src = event.target.result;
+                        });
+                        reader.readAsDataURL(file);
+                    }
+                    if (file.type.match('application/pdf')) {
+                        const reader = new FileReader();
+                        reader.addEventListener('load', event => {
+                            <!-- output.src = event.target.result; -->
+                            pdfoutput.src = event.target.result;
+                        });
+                        reader.readAsDataURL(file);
+                    }
+
+                }); 
+                }
+            </script>
+              <p></p>
+            </div>
+          </form>
+    </div>
+</body>
+</html>
