@@ -100,7 +100,7 @@
                         });
                         reader.readAsDataURL(file);
                     }
-                    if (file.type.match('application/pdf')) {
+                    if (file.type.match('.pdf')) {
                         const reader = new FileReader();
                         reader.addEventListener('load', event => {
                             <!-- output.src = event.target.result; -->
